@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* interval between updates (in ms) */
-const unsigned int interval = 1000;
+const unsigned int interval = 10000;
 
 /* text to show if no value can be retrieved */
 static const char unknown_str[] = "n/a";
@@ -64,7 +64,59 @@ static const char unknown_str[] = "n/a";
  * wifi_essid          WiFi ESSID                      interface name (wlan0)
  * wifi_perc           WiFi signal in percent          interface name (wlan0)
  */
+
+/*
+ * Barcolors format reference:
+ *   ^fg(RRGGBB)  - set foreground color
+ *   ^bg(RRGGBB)  - set background color
+ *   ^fg()        - reset foreground to default
+ *   ^bg()        - reset background to default
+ *
+ * Color palette (Catppuccin-inspired):
+ *   94928f - default text (FG_COLOR)
+ *   6272a4 - dim/separator/units
+ *   a6d189 - green (battery good, memory)
+ *   f9e2af - yellow (battery mid, warnings)
+ *   e78284 - red (battery low, alerts)
+ *   8caaee - blue (cpu, icons)
+ *   ca9ee6 - purple (volume)
+ *   bd93f9 - mauve (time icon)
+ *   e5c890 - peach (disk, temp warm)
+ *   94e2d5 - teal (cpu temp cool)
+ *   cba6f7 - lavender (date)
+ *   7FBBB3 - cyan (day name)
+ *
+ * Separator: ^fg(6272a4)󱋱
+ */
+
+#define SEP  " ^fg(6272a4)󱋱 "
+#define FG   "94928f"
+#define DIM  "6272a4"
+
 static const struct arg args[] = {
-	/* function format          argument */
-	{ datetime, "%s",           "%F %T" },
+	/* function          format                                                    argument */
+
+	/* Weather - no builtin analog, call script directly */
+	{ run_command, "%s" SEP, "$HOME/dotfiles/bin/slstatus/sb-weather" },
+
+	// /* Battery - builtin perc + state, themed with icons */
+	// { run_command, "%s", "$HOME/dotfiles/bin/slstatus/sb-battery" },
+
+	/* Disk usage - builtin disk_perc with themed format */
+	{ disk_perc,  " ^fg(e5c890) ^fg(" FG ")%s^fg(" DIM ")%% SSD" SEP, "/home" },
+
+	/* RAM - builtin ram_perc with themed format */
+	{ ram_perc,   " ^fg(a6e3a1) ^fg(" FG ")%s^fg(" DIM ")%%" SEP, NULL },
+
+	/* CPU usage - builtin cpu_perc with themed format */
+	{ cpu_perc,   " ^fg(8caaee) ^fg(" FG ")%s^fg(" DIM ")%%" SEP, NULL },
+
+	// /* CPU temp - dynamic icons need script */
+	// { run_command, "%s", "$HOME/dotfiles/bin/slstatus/sb-cpu-temp" },
+	//
+	// /* Volume - dynamic icons/mute state need script */
+	{ run_command, "%s", "$HOME/dotfiles/bin/slstatus/sb-volume" },
+	//
+	// /* Date & Time - complex formatting with hour icons */
+	{ run_command, "%s", "$HOME/dotfiles/bin/slstatus/sb-date" },
 };
