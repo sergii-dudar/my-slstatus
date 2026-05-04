@@ -97,7 +97,7 @@ static const struct arg args[] = {
 	/* function          format          argument */
 
 	{ run_command, "%s", "$HOME/dotfiles/bin/slstatus/sb-date" },
-    // "/home/serhii/dotfiles/bin/dwl/sb-key-layout", 
+	{ run_command, "%s", "$HOME/dotfiles/bin/slstatus/sb-key-layout" },
 	{ run_command, "%s", "$HOME/dotfiles/bin/slstatus/sb-volume" },
 	{ run_command, "%s", "$HOME/dotfiles/bin/slstatus/sb-battery" },
 	{ run_command, "%s", "$HOME/dotfiles/bin/slstatus/sb-memory" },
