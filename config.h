@@ -4,7 +4,7 @@
 const unsigned int interval = 10000;
 
 /* text to show if no value can be retrieved */
-static const char unknown_str[] = "n/a";
+static const char unknown_str[] = "";
 
 /* maximum output string length */
 #define MAXLEN 2048
@@ -94,29 +94,15 @@ static const char unknown_str[] = "n/a";
 #define DIM  "6272a4"
 
 static const struct arg args[] = {
-	/* function          format                                                    argument */
+	/* function          format          argument */
 
-	/* Weather - no builtin analog, call script directly */
-	{ run_command, "%s" SEP, "$HOME/dotfiles/bin/slstatus/sb-weather" },
-
-	// /* Battery - builtin perc + state, themed with icons */
-	// { run_command, "%s", "$HOME/dotfiles/bin/slstatus/sb-battery" },
-
-	/* Disk usage - builtin disk_perc with themed format */
-	{ disk_perc,  " ^fg(e5c890) ^fg(" FG ")%s^fg(" DIM ")%% SSD" SEP, "/home" },
-
-	/* RAM - builtin ram_perc with themed format */
-	{ ram_perc,   " ^fg(a6e3a1) ^fg(" FG ")%s^fg(" DIM ")%%" SEP, NULL },
-
-	/* CPU usage - builtin cpu_perc with themed format */
-	{ cpu_perc,   " ^fg(8caaee) ^fg(" FG ")%s^fg(" DIM ")%%" SEP, NULL },
-
-	// /* CPU temp - dynamic icons need script */
-	// { run_command, "%s", "$HOME/dotfiles/bin/slstatus/sb-cpu-temp" },
-	//
-	// /* Volume - dynamic icons/mute state need script */
-	{ run_command, "%s", "$HOME/dotfiles/bin/slstatus/sb-volume" },
-	//
-	// /* Date & Time - complex formatting with hour icons */
 	{ run_command, "%s", "$HOME/dotfiles/bin/slstatus/sb-date" },
+    // "/home/serhii/dotfiles/bin/dwl/sb-key-layout", 
+	{ run_command, "%s", "$HOME/dotfiles/bin/slstatus/sb-volume" },
+	{ run_command, "%s", "$HOME/dotfiles/bin/slstatus/sb-battery" },
+	{ run_command, "%s", "$HOME/dotfiles/bin/slstatus/sb-memory" },
+	{ run_command, "%s", "$HOME/dotfiles/bin/slstatus/sb-cpu-load" },
+	{ run_command, "%s", "$HOME/dotfiles/bin/slstatus/sb-cpu-temp" },
+	{ run_command, "%s", "$HOME/dotfiles/bin/slstatus/sb-disk" },
+	{ run_command, "%s", "$HOME/dotfiles/bin/slstatus/sb-weather" },
 };
